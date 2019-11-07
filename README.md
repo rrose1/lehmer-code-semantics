@@ -1,1 +1,1 @@
-# lehmer-code-semantics
+# permutations
