@@ -7,7 +7,6 @@ open import Agda.Builtin.Equality public
 open import Agda.Builtin.Unit public
 open import Agda.Builtin.Bool public
 open import Agda.Builtin.Nat hiding (_<_) public
--- open import Agda.Builtin.List
 
 
 variable
@@ -261,6 +260,7 @@ module EquivCoh {X : Set l1} {Y : Set l2} where
 
 open EquivCoh public
 
+
 module _ {X : Set l1} {Y : Set l2} {Z : Set l3}
          (e1 : Y ≃ Z) (e2 : X ≃ Y)
          where
@@ -334,7 +334,6 @@ module _ {X : Set l1}
 -----------
 
 module _ {X : Set l1} {Y : Set l2} {Z : Set l3} where
-  open _≃_
   flip-eqv : (X → Y → Z) ≃ (Y → X → Z)
   f flip-eqv k y x = k x y
   g flip-eqv k x y = k y x
@@ -376,7 +375,6 @@ module _ {X : Set l1} {Y : Set l2}
 
 
 module _ {W : Set l1} {X : Set l2} {Y : Set l3} where
-  open _≃_
   qinv-is-cfn-2 : (k1 : W → X → Y) → (k2 : W → Y) →
                   (k3 : (W → Y) → X) →
                   (ϕ1 : (x : X) → k3 (λ w → k1 w x) ≡ x) →
@@ -388,9 +386,6 @@ module _ {W : Set l1} {X : Set l2} {Y : Set l3} where
 
 
 module _ {X : Set l1} {Y : Set l2} where
-  open _≃_
-  open EquivCoh
-  
   biinv-eq : {e1 e2 : X ≃ Y} → f e1 ≡ f e2 → e1 ≡ e2
   biinv-eq {e1@(biinv _ g1 η1 h1 ε1)} {biinv f2 g2 η2 h2 ε2} refl =
     ap (λ w → biinv f2 (fst w) (snd w) h1 ε1)
@@ -410,14 +405,10 @@ module _ {X : Set l1} {Y : Set l2} where
 
 module _ {W : Set l1} {X : Set l2} {Y : Set l3} {Z : Set l4}
          (e1 : Y ≃ Z) (e2 : X ≃ Y) (e3 : W ≃ X) where
-  open _≃_
   ∘e-assoc : (e1 ∘e e2) ∘e e3 ≡ e1 ∘e e2 ∘e e3
   ∘e-assoc = biinv-eq refl
 
 module _ {X : Set l1} {Y : Set l2} (e : X ≃ Y) where
-  open _≃_
-  open EquivCoh
-  
   ∘e-unitl : ide Y ∘e e ≡ e
   ∘e-unitl = biinv-eq refl
 
@@ -431,7 +422,6 @@ module _ {X : Set l1} {Y : Set l2} (e : X ≃ Y) where
   ∘e-invr = biinv-eq (funext (ε' e))
 
 module _ {X : Set l1} {Y : Set l2} {Z : Set l3} (e1 : X ≃ Y) where
-  open _≃_ 
   ∘e-precomp-eqv : (Y ≃ Z) ≃ (X ≃ Z)
   f ∘e-precomp-eqv e2 = e2 ∘e e1
   g ∘e-precomp-eqv e2 = e2 ∘e !e e1
@@ -446,7 +436,6 @@ module _ {X : Set l1} {Y : Set l2} {Z : Set l3} (e1 : X ≃ Y) where
     ∘e-unitr e2 
 
 module _ {X : Set l1} {Y : Set l2} {Z : Set l3} (e1 : Y ≃ Z) where
-  open _≃_ 
   ∘e-postcomp-eqv : (X ≃ Y) ≃ (X ≃ Z)
   f ∘e-postcomp-eqv e2 = e1 ∘e e2
   g ∘e-postcomp-eqv e2 = !e e1 ∘e e2
@@ -463,7 +452,6 @@ module _ {X : Set l1} {Y : Set l2} {Z : Set l3} (e1 : Y ≃ Z) where
 module _ {W : Set l1} {X : Set l2} {Y : Set l3} {Z : Set l4}
          (e1 : W ≃ X) (e2 : Y ≃ Z)
          where
-  open _≃_ 
   ∘e-bicomp-eqv : (X ≃ Y) ≃ (W ≃ Z)
   ∘e-bicomp-eqv = ∘e-postcomp-eqv e2 ∘e ∘e-precomp-eqv e1
 
